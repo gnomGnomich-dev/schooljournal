@@ -39,7 +39,6 @@ BEGIN
               AND day_id = @day_id
               AND lesson_number = @lesson_number
               AND semester_id = @semester_id
-              AND is_active = '1'
         )
         BEGIN
             RAISERROR('В это время у класса уже есть предмет', 16, 1);
@@ -48,11 +47,11 @@ BEGIN
         -- Добавляем запись
         INSERT INTO schedule (
             class_id, subject_id, teacher_id, day_id, lesson_number,
-            start_time, end_time, room, semester_id
+            start_time, end_time, room, homework, semester_id
         )
         VALUES (
             @class_id, @subject_id, @teacher_id, @day_id, @lesson_number,
-            @start_time, @end_time, @room, @semester_id
+            @start_time, @end_time, @room, NULL, @semester_id
         );
 
         SET @schedule_id = SCOPE_IDENTITY();

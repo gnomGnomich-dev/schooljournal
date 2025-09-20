@@ -72,7 +72,7 @@ BEGIN
             EXEC sp_create_user_with_password_return
                 @email = @parent_email,
                 @phone = @parent_phone,
-                @role = 4, -- Родитель
+                @role = 3, -- Родитель
                 @generated_password = @parent_password OUTPUT,
                 @user_id = @user_id;
 
@@ -92,7 +92,7 @@ BEGIN
         EXEC sp_create_user_with_password_return
             @email = @email,
             @phone = @phone,
-            @role = 3, -- Ученик
+            @role = 1, -- Ученик
             @generated_password = @student_password OUTPUT,
             @user_id = @user_id;
 

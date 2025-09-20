@@ -1,7 +1,7 @@
 ﻿CREATE OR ALTER PROCEDURE sp_create_user_with_password_return
     @email VARCHAR(255),
     @phone VARCHAR(20),
-    @role INT,
+    @role_id INT,
     @is_active CHAR(1) = '1',
     @avatar_url TEXT = NULL,
     @generated_password VARCHAR(50) OUTPUT,
@@ -21,8 +21,8 @@ BEGIN
         DECLARE @password_hash VARCHAR(128) = CONVERT(VARCHAR(128), HASHBYTES('SHA2_256', @raw_password), 2);
 
         -- 3. Создаем запись в users
-        INSERT INTO users (email, password_hash, role, phone, is_active, avatar_url, created_at)
-        VALUES (@email, @password_hash, @role, @phone, @is_active, @avatar_url, SYSDATETIME());
+        INSERT INTO users (email, password_hash, role_id, phone, is_active, avatar_url, created_at)
+        VALUES (@email, @password_hash, @role_id, @phone, @is_active, @avatar_url, SYSDATETIME());
 
         SET @user_id = SCOPE_IDENTITY();
 

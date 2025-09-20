@@ -27,7 +27,7 @@ CREATE TABLE users (
 	id INT PRIMARY KEY IDENTITY(1, 1),
 	email VARCHAR(255) UNIQUE NOT NULL,
 	password_hash VARCHAR(255) NULL,
-	role INT NOT NULL,
+	role_id INT NOT NULL,
 	phone VARCHAR(20) UNIQUE NOT NULL,
 	is_active CHAR(1) DEFAULT '1',
 	avatar_url TEXT,
@@ -46,6 +46,11 @@ CREATE TABLE schools (
 	deleted_at DATETIME
 );
 
+CREATE TABLE roles (
+    id INT PRIMARY KEY IDENTITY(1, 1),
+    name VARCHAR(20)
+);
+
 CREATE TABLE classes (
     id INT PRIMARY KEY IDENTITY(1, 1),
     name VARCHAR(10) NOT NULL,          
@@ -62,7 +67,9 @@ CREATE TABLE students (
     birth_date DATE,
     gender_id INT,
     enrollment_date DATE,
-    parent_id INTEGER
+    parent_id INTEGER,
+    update_at DATETIME,
+    deleted_at DATETIME
 );
 
 CREATE TABLE parents (
@@ -83,10 +90,13 @@ CREATE TABLE genders (
 CREATE TABLE teachers (
     id INT PRIMARY KEY IDENTITY(1, 1),
     user_id INTEGER UNIQUE,
+    gender_id INTEGER,
     subject_id INT,
     education VARCHAR(255),
     experience_years INTEGER,
-    hire_date DATE
+    hire_date DATE,
+    update_at DATETIME,
+    deleted_at DATETIME
 );
 
 CREATE TABLE subjects (
@@ -133,7 +143,7 @@ CREATE TABLE schedule (
     start_time TIME,                      
     end_time TIME,                       
     room VARCHAR(50),                    
-    is_active CHAR(1) DEFAULT '1',        
+    homework VARCHAR(MAX),      
     semester_id INTEGER 
 );
 
@@ -278,6 +288,16 @@ FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE parents
 ADD CONSTRAINT FK_parents_genders
 FOREIGN KEY (gender_id) REFERENCES genders(id);
+
+--24. teachers -> genders
+ALTER TABLE teachers
+ADD CONSTRAINT FK_teachers_genders
+FOREIGN KEY (gender_id) REFERENCES genders(id);
+
+--25. users -> roles
+ALTER TABLE users
+ADD CONSTRAINT FK_users_roles
+FOREIGN KEY (role_id) REFERENCES roles(id);
 
 INSERT INTO genders (name) VALUES 
 (

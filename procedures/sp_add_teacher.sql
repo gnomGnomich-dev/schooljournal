@@ -58,7 +58,7 @@ BEGIN
         EXEC sp_create_user_with_password_return
             @email = @email,
             @phone = @phone,
-            @role = 2, -- Учитель
+            @role_id = 2, -- Учитель
             @generated_password = @generated_password OUTPUT,
             @user_id = @user_id OUTPUT;
 
@@ -110,17 +110,3 @@ BEGIN
         RAISERROR(@error_message, 16, 1);
     END CATCH
 END
-
-DECLARE @pwd VARCHAR(50);
-EXEC add_teacher
-    @email = '22t118@kuzstu.ru',
-    @phone = '89950604780',
-    @fullname = 'Хивинцева Арина Мальбертовна',
-    @subject_name = 'Математика',
-    @generated_password = @pwd OUTPUT;
-SELECT @pwd AS generatedpassword;
-
-SELECT * FROM users
-SELECT * FROM teachers;
-DELETE FROM users
-DELETE FROM teachers

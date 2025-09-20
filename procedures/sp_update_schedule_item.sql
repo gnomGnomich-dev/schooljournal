@@ -8,7 +8,7 @@ CREATE OR ALTER PROCEDURE sp_update_schedule_item
     @start_time TIME = NULL,
     @end_time TIME = NULL,
     @room VARCHAR(50) = NULL,
-    @is_active CHAR(1) = NULL,
+    @homework VARCHAR(MAX) = NULL,
     @semester_id INT = NULL
 AS
 BEGIN
@@ -48,7 +48,7 @@ BEGIN
             start_time = ISNULL(@start_time, start_time),
             end_time = ISNULL(@end_time, end_time),
             room = ISNULL(@room, room),
-            is_active = ISNULL(@is_active, is_active),
+            homework = ISNULL(@homework, homework),
             semester_id = ISNULL(@semester_id, semester_id)
         WHERE id = @schedule_id;
 
