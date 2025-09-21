@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Личный кабинет — Родитель</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .tabs {
+      display: flex;
+      gap: 1px;
+      margin: 30px 0 20px;
+      background: #ecf0f1;
+      border-radius: 12px;
+      padding: 4px;
+    }
+    .tab {
+      padding: 12px 24px;
+      background: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #7f8c8d;
+      transition: all 0.2s;
+    }
+    .tab.active {
+      background: #3498db;
+      color: white;
+    }
+    .filters {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    .filter-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 14px;
+    }
+    .filter-group select {
+      padding: 10px 14px;
+      border: 2px solid #ecf0f1;
+      border-radius: 8px;
+      background: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid #ecf0f1;
+    }
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #2c3e50;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .grade-cell {
+      font-weight: bold;
+      text-align: center;
+      min-width: 50px;
+    }
+    .grade-5 { color: #27ae60; }
+    .grade-4 { color: #3498db; }
+    .grade-3 { color: #e67e22; }
+    .grade-2 { color: #e74c3c; }
+    .comment {
+      font-size: 13px;
+      color: #7f8c8d;
+      margin-top: 5px;
+    }
+    .section {
+      margin-bottom: 50px;
+    }
+    .section-title {
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #ecf0f1;
+      color: #2c3e50;
+    }
+    .page {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+    .page.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .student-profile {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+    }
+    .student-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-right: 20px;
+      object-fit: cover;
+    }
+    .student-info h2 {
+      margin: 0 0 5px 0;
+      color: #2c3e50;
+    }
+    .student-info p {
+      margin: 0;
+      color: #7f8c8d;
+    }
+    .homework-table {
+      margin-top: 20px;
+    }
+    .homework-table th,
+    .homework-table td {
+      padding: 12px 16px;
+    }
+    .homework-status {
+      font-weight: bold;
+    }
+    .status-done {
+      color: #27ae60;
+    }
+    .status-pending {
+      color: #e67e22;
+    }
+
+    /* Стили для таблицы "Все отметки" */
+    .all-grades-table th,
+    .all-grades-table td {
+      text-align: center;
+    }
+    .all-grades-table th:first-child,
+    .all-grades-table td:first-child {
+      text-align: left;
+    }
+    .avg-cell {
+      font-weight: bold;
+      background: #f1f8ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="geometric-bg" id="geometricBg"></div>
+  <div class="header">
+    <div class="container flex-between">
+      <h1>📚 ЭдуЖурнал</h1>
+      <div class="user-menu">
+        <span>Анна Сергеевна (Родитель)</span>
+        <img src="mi.jpg" alt="Аватар" class="avatar" />
+      </div>
+    </div>
+  </div>
+
+  <div class="container dashboard">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="#" class="nav-link active" data-page="overview">Обзор</a></li>
+        <li><a href="#" class="nav-link" data-page="grades">Оценки</a></li>
+        <li><a href="#" class="nav-link" data-page="reports">Отчёты</a></li>
+        <li><a href="#">Сообщения</a></li>
+        <li><a href="#">Настройки</a></li>
+        <li><a href="index.html" class="logout">Выход</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div id="overview" class="page active">
+        <h2>Добрый день, Анна Сергеевна!</h2>
+        <p class="date">Среда, 5 апреля 2025</p>
+        <div class="student-profile">
+          <img src="mi.jpg" alt="Фото ученика" class="student-avatar">
+          <div class="student-info">
+            <h2>Мария Сидорова</h2>
+            <p>9А класс</p>
+          </div>
+        </div>
+        <div class="cards-grid">
+          <div class="stat-card blue">
+            <h3>Средний балл</h3>
+            <p class="number">4.3</p>
+          </div>
+          <div class="stat-card orange">
+            <h3>Пропущено уроков</h3>
+            <p class="number">2</p>
+          </div>
+          <div class="stat-card green">
+            <h3>Пятёрок за месяц</h3>
+            <p class="number">8</p>
+          </div>
+        </div>
+
+
+        <div class="section">
+          <h3 class="section-title">📅 Предстоящие события</h3>
+          <div class="lessons-list">
+            <div class="lesson-item">
+              <div>
+                <strong>Завтра, 09:00</strong> — Контрольная по алгебре
+              </div>
+            </div>
+            <div class="lesson-item">
+              <div>
+                <strong>Пятница</strong> — Родительское собрание
+              </div>
+            </div>
+            <div class="lesson-item">
+              <div>
+                <strong>15 апреля</strong> — Олимпиада по английскому
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ОБНОВЛЕННАЯ СТРАНИЦА: Оценки -->
+      <div id="grades" class="page">
+        <div class="filters">
+          <div class="filter-group">
+            <label>Учебный год</label>
+            <select>
+              <option>2024/2025</option>
+              <option>2023/2024</option>
+              <option>2022/2023</option>
+            </select>
+          </div>
+          <!-- Фильтр: Неделя -->
+          <div class="filter-group">
+            <label>Неделя</label>
+            <select id="week-filter">
+              <option value="all">Все</option>
+              <option value="1-7">1-7 апреля</option>
+              <option value="8-14">8-14 апреля</option>
+              <option value="15-21">15-21 апреля</option>
+              <option value="22-28">22-28 апреля</option>
+              <option value="29-30">29-30 апреля</option>
+            </select>
+          </div>
+        </div>
+        <div class="tabs">
+          <button class="tab active">Все отметки</button>
+          <button class="tab">Итоговые отметки</button>
+        </div>
+
+        <!-- Таблица: Все отметки -->
+        <div id="all-grades" class="grades-section">
+          <table class="all-grades-table">
+            <thead>
+              <tr>
+                <th>Предмет</th>
+                <th>01.04</th>
+                <th>02.04</th>
+                <th>03.04</th>
+                <th>04.04</th>
+                <th>05.04</th>
+                <th>06.04</th>
+                <th>07.04</th>
+                <th>Средний балл</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Математика</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="avg-cell grade-5">4.7</td>
+              </tr>
+              <tr>
+                <td>Русский язык</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="avg-cell grade-4">3.7</td>
+              </tr>
+              <tr>
+                <td>Физика</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="avg-cell grade-4">4.0</td>
+              </tr>
+              <tr>
+                <td>Литература</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="avg-cell grade-4">4.3</td>
+              </tr>
+              <tr>
+                <td>Английский язык</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="avg-cell grade-5">4.7</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Таблица: Итоговые отметки -->
+        <div id="final-grades" class="grades-section" style="display: none;">
+          <table>
+            <thead>
+              <tr>
+                <th>Предмет</th>
+                <th>1 четв</th>
+                <th>2 четв</th>
+                <th>3 четв</th>
+                <th>4 четв</th>
+                <th>Годовая</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Математика</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-5">5</td>
+              </tr>
+              <tr>
+                <td>Русский язык</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-4">4</td>
+              </tr>
+              <tr>
+                <td>Физика</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-4">4</td>
+              </tr>
+              <tr>
+                <td>Литература</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-4">4</td>
+              </tr>
+              <tr>
+                <td>Английский язык</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-5">5</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="reports" class="page">
+        <h2>📄 Итоговые отчёты</h2>
+        <p class="date">Ученик: Мария Сидорова • Класс: 9А</p>
+
+        <div class="section" style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin-top: 20px;">
+          <h3>Годовой отчёт об успеваемости (2024/2025)</h3>
+          <p><strong>ФИО:</strong> Сидорова Мария Ивановна</p>
+          <p><strong>Класс:</strong> 9А</p>
+          <p><strong>Текцщий средний балл:</strong> <span style="font-size: 1.5rem; font-weight: bold; color: #27ae60;">4.3</span></p>
+          <p><strong>Место в классе:</strong> 3 из 25</p>
+
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-page') === pageId) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Переключение вкладок внутри "Оценки"
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+
+        const allGradesSection = document.getElementById('all-grades');
+        const finalGradesSection = document.getElementById('final-grades');
+
+        if (this.textContent === 'Все отметки') {
+          allGradesSection.style.display = 'block';
+          finalGradesSection.style.display = 'none';
+        } else if (this.textContent === 'Итоговые отметки') {
+          allGradesSection.style.display = 'none';
+          finalGradesSection.style.display = 'block';
+        }
+      });
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const pageId = this.getAttribute('data-page');
+        showPage(pageId);
+      });
+    });
+  </script>
+</body>
+</html>

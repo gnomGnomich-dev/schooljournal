@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Личный кабинет — Учитель</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="geometric-bg" id="geometricBg"></div>
+  <!-- Шапка -->
+  <div class="header">
+    <div class="container flex-between">
+      <h1>📚 ЭдуЖурнал</h1>
+      <div class="user-menu">
+        <span>Иван Петрович</span>
+        <img src="mi.jpg" alt="Аватар" class="avatar" />
+      </div>
+    </div>
+  </div>
+  <div class="container dashboard">
+    <!-- Сайдбар -->
+    <aside class="sidebar">
+      <ul>
+        <li><a href="#" class="nav-link active" data-page="main">Главная</a></li>
+        <li><a href="#" class="nav-link" data-page="grades-form">Выставить оценки</a></li>
+        <li><a href="#" class="nav-link" data-page="homework-form">Домашние задания</a></li>
+        <li><a href="#" class="nav-link" data-page="schedule">Расписание</a></li>
+        <li><a href="#" class="nav-link" data-page="reports">Отчёты</a></li>
+        <li><a href="#">Сообщения</a></li>
+        <li><a href="#">Настройки</a></li>
+        <li><a href="index.html" class="logout">Выход</a></li>
+      </ul>
+    </aside>
+    <!-- Основной контент -->
+    <main class="main-content">
+      <!-- СТРАНИЦА: Главная (уроки) -->
+      <div id="main" class="page active">
+        <h2>Доброе утро, Иван Петрович!</h2>
+        <p class="date">Среда, 5 апреля 2025</p>
+        <div class="cards-grid">
+          <div class="stat-card blue">
+            <h3>Сегодня уроков</h3>
+            <p class="number">4</p>
+          </div>
+          <div class="stat-card orange">
+            <h3>Не выставлено оценок</h3>
+            <p class="number">7</p>
+          </div>
+          <div class="stat-card green">
+            <h3>Новых сообщений</h3>
+            <p class="number">3</p>
+          </div>
+        </div>
+        <h3>Сегодня в расписании</h3>
+        <div class="lessons-list">
+          <div class="lesson-item">
+            <div>
+              <strong>09:00–09:45</strong> — Математика (9А)
+            </div>
+            <button class="btn small" onclick="showGradesPage('Математика', '9А')">Оценки</button>
+          </div>
+          <div class="lesson-item">
+            <div>
+              <strong>10:00–10:45</strong> — Физика (10Б)
+            </div>
+            <button class="btn small" onclick="showGradesPage('Физика', '10Б')">Оценки</button>
+          </div>
+          <div class="lesson-item attention">
+            <div>
+              <strong>11:00–11:45</strong> — Химия (8В)
+              <span class="badge">Посещаемость не отмечена</span>
+            </div>
+            <button class="btn small">Отметить</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- СТРАНИЦА: Выставить оценки (ПЕРЕРАБОТАНА) -->
+      <div id="grades-form" class="page">
+        <h2>📝 Выставить оценки</h2>
+        <div class="actions-bar">
+          <select class="class-select" id="class-select">
+            <option value="">— Выберите класс —</option>
+            <option value="9А">9А</option>
+            <option value="10Б">10Б</option>
+            <option value="8В">8В</option>
+          </select>
+          <select class="subject-select" id="subject-select">
+            <option value="">— Выберите предмет —</option>
+            <option value="Математика">Математика</option>
+            <option value="Физика">Физика</option>
+            <option value="Химия">Химия</option>
+            <option value="Литература">Литература</option>
+          </select>
+          <input type="date" class="date-input" id="date-input" value="2025-04-05" />
+          <button class="btn" onclick="loadClassAndSubject()">Загрузить учеников</button>
+        </div>
+        <div class="actions-bar">
+          <input type="text" class="topic-input" placeholder="Тема урока (например, «Квадратные уравнения»)" id="topic-input" />
+        </div>
+        <table id="grades-table" style="display: none;">
+          <thead>
+            <tr>
+              <th>Ученик</th>
+              <th>Оценка</th>
+              <th>Тип оценки</th>
+              <th>Комментарий</th>
+            </tr>
+          </thead>
+          <tbody id="grades-table-body">
+            <!-- Заполняется JS -->
+          </tbody>
+        </table>
+        <div class="actions-bar" style="justify-content: flex-end; margin-top: 20px;">
+          <button class="btn btn-primary" onclick="saveGrades()">Сохранить оценки</button>
+        </div>
+      </div>
+
+      <!-- СТРАНИЦА: Домашние задания (НОВАЯ) -->
+      <div id="homework-form" class="page">
+        <h2>📖 Назначить домашнее задание</h2>
+        <div class="actions-bar">
+          <select class="class-select" id="hw-class-select">
+            <option value="">— Выберите класс —</option>
+            <option value="9А">9А</option>
+            <option value="10Б">10Б</option>
+            <option value="8В">8В</option>
+          </select>
+          <select class="subject-select" id="hw-subject-select">
+            <option value="">— Выберите предмет —</option>
+            <option value="Математика">Математика</option>
+            <option value="Физика">Физика</option>
+            <option value="Химия">Химия</option>
+            <option value="Литература">Литература</option>
+          </select>
+        </div>
+        <div class="actions-bar">
+          <textarea class="topic-input" placeholder="Опишите домашнее задание..." id="hw-description" style="height: 80px; resize: vertical;"></textarea>
+        </div>
+        <div class="actions-bar">
+          <label for="hw-assign-date">Дата задания:</label>
+          <input type="date" class="date-input" id="hw-assign-date" value="2025-04-05" />
+          <label for="hw-due-date">Сдать до:</label>
+          <input type="date" class="date-input" id="hw-due-date" value="2025-04-08" />
+          <button class="btn btn-primary" onclick="saveHomework()">Назначить ДЗ</button>
+        </div>
+        <div id="hw-success-message" style="margin-top: 20px; padding: 15px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 8px; display: none;">
+          Домашнее задание успешно назначено!
+        </div>
+      </div>
+
+      <!-- СТРАНИЦА: Расписание на неделю -->
+      <div id="schedule" class="page">
+        <h2>📅 Расписание на неделю</h2>
+        <p class="date">Учебный год: 2024/2025 • Класс: 9А, 10Б, 8В</p>
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Время</th>
+              <th>Понедельник<br><small>07.04.2025</small></th>
+              <th>Вторник<br><small>08.04.2025</small></th>
+              <th>Среда<br><small>09.04.2025</small></th>
+              <th>Четверг<br><small>10.04.2025</small></th>
+              <th>Пятница<br><small>11.04.2025</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Ряды расписания -->
+            <tr>
+              <td>09:00–09:45</td>
+              <td><div class="schedule-item"><strong>Математика</strong><br><span>9А, каб. 204</span></div></td>
+              <td><div class="schedule-item"><strong>Физика</strong><br><span>10Б, каб. 301</span></div></td>
+              <td><div class="schedule-item"><strong>Математика</strong><br><span>9А, каб. 204</span></div></td>
+              <td><div class="schedule-item"><strong>Химия</strong><br><span>8В, каб. 212</span></div></td>
+              <td><div class="schedule-item"><strong>Литература</strong><br><span>9А, каб. 208</span></div></td>
+            </tr>
+            <tr>
+              <td>10:00–10:45</td>
+              <td><div class="schedule-item"><strong>Русский язык</strong><br><span>9А, каб. 208</span></div></td>
+              <td><div class="schedule-item"><strong>Математика</strong><br><span>10Б, каб. 204</span></div></td>
+              <td><div class="schedule-item"><strong>Физика</strong><br><span>10Б, каб. 301</span></div></td>
+              <td><div class="schedule-item"><strong>Математика</strong><br><span>9А, каб. 204</span></div></td>
+              <td><div class="schedule-item"><strong>Физика</strong><br><span>8В, каб. 301</span></div></td>
+            </tr>
+            <tr>
+              <td>11:00–11:45</td>
+              <td><div class="schedule-item"><strong>Химия</strong><br><span>8В, каб. 212</span></div></td>
+              <td><div class="schedule-item"><strong>Литература</strong><br><span>9А, каб. 208</span></div></td>
+              <td><div class="schedule-item"><strong>Химия</strong><br><span>8В, каб. 212</span></div></td>
+              <td><div class="schedule-item"><strong>Русский язык</strong><br><span>10Б, каб. 208</span></div></td>
+              <td><div class="schedule-item"><strong>Математика</strong><br><span>10Б, каб. 204</span></div></td>
+            </tr>
+            <tr>
+              <td>13:00–13:45</td>
+              <td><div class="schedule-item"><strong>История</strong><br><span>9А, каб. 105</span></div></td>
+              <td><div class="schedule-item"><strong>Английский</strong><br><span>8В, каб. 210</span></div></td>
+              <td><div class="schedule-item"><strong>Биология</strong><br><span>10Б, каб. 305</span></div></td>
+              <td><div class="schedule-item"><strong>История</strong><br><span>8В, каб. 105</span></div></td>
+              <td><div class="schedule-item"><strong>Английский</strong><br><span>10Б, каб. 210</span></div></td>
+            </tr>
+            <tr>
+              <td>14:00–14:45</td>
+              <td><div class="schedule-item"><strong>Английский</strong><br><span>10Б, каб. 210</span></div></td>
+              <td><div class="schedule-item"><strong>Биология</strong><br><span>9А, каб. 305</span></div></td>
+              <td><div class="schedule-item"><strong>Английский</strong><br><span>8В, каб. 210</span></div></td>
+              <td><div class="schedule-item"><strong>Физкультура</strong><br><span>Все, спортзал</span></div></td>
+              <td><div class="schedule-item"><strong>Информатика</strong><br><span>10Б, каб. 402</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 30px; color: #7f8c8d; font-size: 14px;">
+          <em>Примечание: Расписание составлено на неделю. Изменения можно вносить через раздел "Настройки".</em>
+        </p>
+      </div>
+
+      <!-- СТРАНИЦА: Отчёты -->
+      <div id="reports" class="page">
+        <h2>📊 Отчёты по оценкам</h2>
+        <div class="actions-bar">
+          <select class="class-select" id="report-class-select">
+            <option value="">— Выберите класс —</option>
+            <option value="9А">9А</option>
+            <option value="10Б">10Б</option>
+            <option value="8В">8В</option>
+          </select>
+          <button class="btn" onclick="loadReport()">Загрузить отчёт</button>
+          <button class="btn btn-export" onclick="exportToExcel()">📥 Экспорт в Excel</button>
+        </div>
+        <div id="report-table-container" style="margin-top: 30px; display: none;">
+          <table id="report-table">
+            <thead>
+              <tr>
+                <th>Ученик</th>
+                <th>Предмет</th>
+                <th>Дата</th>
+                <th>Оценка</th>
+                <th>Тип</th>
+                <th>Комментарий</th>
+              </tr>
+            </thead>
+            <tbody id="report-table-body">
+              <!-- Заполняется JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    // Данные — в реальном проекте придут с сервера
+    const studentsByClass = {
+      '9А': [
+        { name: 'Мария Сидорова', id: 1 },
+        { name: 'Андрей Козлов', id: 2 },
+        { name: 'Ольга Петрова', id: 3 },
+        { name: 'Дмитрий Смирнов', id: 4 },
+        { name: 'Екатерина Волкова', id: 5 }
+      ],
+      '10Б': [
+        { name: 'Алексей Иванов', id: 6 },
+        { name: 'Наталья Соколова', id: 7 },
+        { name: 'Сергей Морозов', id: 8 }
+      ],
+      '8В': [
+        { name: 'Ирина Кузнецова', id: 9 },
+        { name: 'Павел Васильев', id: 10 },
+        { name: 'Анна Новикова', id: 11 },
+        { name: 'Максим Алексеев', id: 12 }
+      ]
+    };
+
+    // Показать страницу по ID
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+      // Обновляем активный пункт меню
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-page') === pageId) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    // Показать страницу оценок с предзаполненным классом и предметом (из расписания)
+    function showGradesPage(subject, className) {
+      showPage('grades-form');
+      document.getElementById('class-select').value = className;
+      document.getElementById('subject-select').value = subject;
+      loadStudents(className);
+      // Устанавливаем текущую дату
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('date-input').value = today;
+    }
+
+    // Загрузить учеников по выбранному классу
+    function loadClassAndSubject() {
+      const className = document.getElementById('class-select').value;
+      if (!className) {
+        alert('Пожалуйста, выберите класс');
+        return;
+      }
+      loadStudents(className);
+    }
+
+    function loadStudents(className) {
+      const tbody = document.getElementById('grades-table-body');
+      const table = document.getElementById('grades-table');
+      tbody.innerHTML = '';
+      const students = studentsByClass[className] || [];
+      if (students.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#95a5a6">Нет учеников в этом классе</td></tr>`;
+        table.style.display = 'table';
+        return;
+      }
+      students.forEach(student => {
+        const row = `
+          <tr>
+            <td>${student.name}</td>
+            <td>
+              <select class="grade-input" data-student-id="${student.id}">
+                <option value="">—</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="н">н</option>
+                <option value="уп">уп</option>
+                <option value="осв">осв</option>
+              </select>
+            </td>
+            <td>
+              <select class="grade-type-select">
+                <option value="Работа на уроке">Работа на уроке</option>
+                <option value="Контрольная работа">Контрольная работа</option>
+                <option value="Проверочная работа">Проверочная работа</option>
+                <option value="Домашнее задание">Домашнее задание</option>
+              </select>
+            </td>
+            <td><input type="text" class="comment-input" placeholder="Комментарий" style="width: 100%; padding: 8px; border: 1px solid #ecf0f1; border-radius: 4px;"></td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+      table.style.display = 'table';
+      // Загружаем сохранённые оценки, если есть
+      const subject = document.getElementById('subject-select').value;
+      const date = document.getElementById('date-input').value;
+      if (subject && date) {
+        loadSavedGrades();
+      }
+    }
+
+    // Сохраняет оценки в localStorage
+    function saveGrades() {
+      const className = document.getElementById('class-select').value;
+      const subject = document.getElementById('subject-select').value;
+      const date = document.getElementById('date-input').value;
+      const topic = document.getElementById('topic-input').value;
+      if (!className || !subject) {
+        alert('Выберите класс и предмет!');
+        return;
+      }
+      if (!topic) {
+        alert('Пожалуйста, укажите тему урока!');
+        return;
+      }
+      const selects = document.querySelectorAll('.grade-input');
+      const typeSelects = document.querySelectorAll('.grade-type-select');
+      const comments = document.querySelectorAll('.comment-input');
+      const gradesData = [];
+      let filled = 0;
+      selects.forEach((select, i) => {
+        const grade = select.value.trim();
+        const gradeType = typeSelects[i].value;
+        const comment = comments[i].value.trim();
+        const studentId = select.dataset.studentId;
+        const studentName = select.closest('tr').querySelector('td:first-child').textContent;
+        if (grade) {
+          filled++;
+          gradesData.push({
+            studentId,
+            studentName,
+            grade,
+            gradeType,
+            comment,
+            date,
+            subject,
+            className,
+            topic
+          });
+        }
+      });
+      if (filled === 0) {
+        alert('Вы не поставили ни одной оценки!');
+        return;
+      }
+      const key = `grades_${className}_${subject}_${date}`;
+      localStorage.setItem(key, JSON.stringify(gradesData));
+      alert(`Сохранено ${filled} оценок по предмету "${subject}" в классе "${className}" за ${date}! Тема: "${topic}"`);
+    }
+
+    // Загружает сохранённые оценки при открытии формы
+    function loadSavedGrades() {
+      const className = document.getElementById('class-select').value;
+      const subject = document.getElementById('subject-select').value;
+      const date = document.getElementById('date-input').value;
+      if (!className || !subject || !date) return;
+      const key = `grades_${className}_${subject}_${date}`;
+      const saved = localStorage.getItem(key);
+      if (!saved) return;
+      const gradesData = JSON.parse(saved);
+      gradesData.forEach(item => {
+        const row = [...document.querySelectorAll('#grades-table-body tr')].find(tr =>
+          tr.querySelector('td:first-child').textContent === item.studentName
+        );
+        if (row) {
+          const gradeSelect = row.querySelector('.grade-input');
+          const typeSelect = row.querySelector('.grade-type-select');
+          const commentInput = row.querySelector('.comment-input');
+          gradeSelect.value = item.grade;
+          typeSelect.value = item.gradeType;
+          commentInput.value = item.comment;
+        }
+      });
+    }
+
+    // Форматирование даты: 2025-04-05 → 05.04.2025
+    function formatDate(dateStr) {
+      const [year, month, day] = dateStr.split('-');
+      return `${day}.${month}.${year}`;
+    }
+
+    // Загрузить отчёт по классу
+    function loadReport() {
+      const className = document.getElementById('report-class-select').value;
+      if (!className) {
+        alert('Выберите класс!');
+        return;
+      }
+      const tbody = document.getElementById('report-table-body');
+      tbody.innerHTML = '';
+      const container = document.getElementById('report-table-container');
+      container.style.display = 'block';
+      const allKeys = Object.keys(localStorage).filter(key => key.startsWith(`grades_${className}_`));
+      const allGrades = [];
+      allKeys.forEach(key => {
+        const data = JSON.parse(localStorage.getItem(key));
+        allGrades.push(...data);
+      });
+      if (allGrades.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#95a5a6">Нет выставленных оценок</td></tr>`;
+        return;
+      }
+      allGrades.sort((a, b) => {
+        const dateA = new Date(a.date), dateB = new Date(b.date);
+        if (dateA < dateB) return -1;
+        if (dateA > dateB) return 1;
+        return a.studentName.localeCompare(b.studentName);
+      });
+      allGrades.forEach(item => {
+        const row = `
+          <tr>
+            <td>${item.studentName}</td>
+            <td>${item.subject}</td>
+            <td>${formatDate(item.date)}</td>
+            <td class="grade-cell grade-${item.grade}">${item.grade}</td>
+            <td>${item.gradeType}</td>
+            <td>${item.comment || '-'}</td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+    }
+
+    // Экспорт в CSV (Excel)
+    function exportToExcel() {
+      const className = document.getElementById('report-class-select').value;
+      if (!className) {
+        alert('Выберите класс перед экспортом!');
+        return;
+      }
+      const allKeys = Object.keys(localStorage).filter(key => key.startsWith(`grades_${className}_`));
+      const allGrades = [];
+      allKeys.forEach(key => {
+        const data = JSON.parse(localStorage.getItem(key));
+        allGrades.push(...data);
+      });
+      if (allGrades.length === 0) {
+        alert('Нет данных для экспорта.');
+        return;
+      }
+      const headers = ['Ученик', 'Предмет', 'Дата', 'Оценка', 'Тип', 'Комментарий'];
+      const csvContent = [
+        headers.join(';'),
+        ...allGrades.map(item => [
+          item.studentName,
+          item.subject,
+          formatDate(item.date),
+          item.grade,
+          item.gradeType,
+          item.comment || ''
+        ].join(';'))
+      ].join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `Отчёт_${className}_${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Функция для назначения домашнего задания
+    function saveHomework() {
+      const className = document.getElementById('hw-class-select').value;
+      const subject = document.getElementById('hw-subject-select').value;
+      const description = document.getElementById('hw-description').value.trim();
+      const assignDate = document.getElementById('hw-assign-date').value;
+      const dueDate = document.getElementById('hw-due-date').value;
+
+      if (!className || !subject) {
+        alert('Выберите класс и предмет!');
+        return;
+      }
+      if (!description) {
+        alert('Пожалуйста, введите описание домашнего задания!');
+        return;
+      }
+      if (!assignDate || !dueDate) {
+        alert('Укажите даты!');
+        return;
+      }
+
+      const homeworkData = {
+        className,
+        subject,
+        description,
+        assignDate,
+        dueDate
+      };
+
+      // Ключ для хранения ДЗ по классу
+      const key = `homework_${className}`;
+      let homeworkList = JSON.parse(localStorage.getItem(key) || '[]');
+      homeworkList.push(homeworkData);
+      localStorage.setItem(key, JSON.stringify(homeworkList));
+
+      // Показываем сообщение об успехе
+      const messageDiv = document.getElementById('hw-success-message');
+      messageDiv.style.display = 'block';
+      messageDiv.textContent = `Домашнее задание по "${subject}" для класса "${className}" успешно назначено!`;
+
+      // Очищаем форму
+      document.getElementById('hw-description').value = '';
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 3000);
+    }
+
+    // Навешиваем обработчики на меню
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const pageId = this.getAttribute('data-page');
+        showPage(pageId);
+      });
+    });
+  </script>
+</body>
+</html>

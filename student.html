@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Личный кабинет — Ученик</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Геометрический фон — фигуры падают при загрузке -->
+  <div class="geometric-bg" id="geometricBg"></div>
+  <div class="header">
+    <div class="container flex-between">
+      <h1>📚 ЭдуЖурнал</h1>
+      <div class="user-menu">
+        <span>Мария Сидорова</span>
+        <img src="mi.jpg" alt="Аватар" class="avatar" />
+      </div>
+    </div>
+  </div>
+  <div class="container dashboard">
+    <aside class="sidebar">
+      <ul>
+        <li><a href="#" class="nav-link active" data-page="main">Главная</a></li>
+        <li><a href="#" class="nav-link" data-page="grades">Оценки</a></li>
+        <li><a href="#" class="nav-link" data-page="schedule">Расписание</a></li>
+        <li><a href="#" class="nav-link" data-page="homework">Домашние задания</a></li>
+        <li><a href="#">Сообщения</a></li>
+        <li><a href="#">Мои достижения</a></li>
+        <li><a href="#">Настройки</a></li>
+        <li><a href="index.html" class="logout">Выход</a></li>
+      </ul>
+    </aside>
+    <main class="main-content">
+      <div id="main" class="page active">
+        <h2>Привет, Мария 👋</h2>
+        <p class="date">Среда, 5 апреля 2025 • 9А класс</p>
+        <div class="cards-grid">
+          <div class="stat-card blue">
+            <h3>Средний балл</h3>
+            <p class="number">4.3</p>
+          </div>
+          <div class="stat-card orange">
+            <h3>Пропущено уроков</h3>
+            <p class="number">2</p>
+          </div>
+          <div class="stat-card green">
+            <h3>Пятёрок за месяц</h3>
+            <p class="number">8</p>
+          </div>
+        </div>
+
+        <!-- УДАЛЕНО: Блок "Последние оценки" -->
+
+        <div class="section">
+          <h3 class="section-title">📅 Ближайшие события</h3>
+          <div class="lessons-list">
+            <div class="lesson-item">
+              <div>
+                <strong>Завтра, 09:00</strong> — Контрольная по алгебре
+              </div>
+            </div>
+            <div class="lesson-item">
+              <div>
+                <strong>Пятница</strong> — Родительское собрание
+              </div>
+            </div>
+            <div class="lesson-item">
+              <div>
+                <strong>15 апреля</strong> — Олимпиада по английскому
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="schedule" class="page">
+        <h2>📅 Расписание на неделю</h2>
+        <p class="date">Класс: 9А • Учебный год: 2024/2025</p>
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Время</th>
+              <th>Понедельник<br><small>07.04.2025</small></th>
+              <th>Вторник<br><small>08.04.2025</small></th>
+              <th>Среда<br><small>09.04.2025</small></th>
+              <th>Четверг<br><small>10.04.2025</small></th>
+              <th>Пятница<br><small>11.04.2025</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>09:00–09:45</td>
+              <td><div class="schedule-item"><strong>Математика</strong><br><span>каб. 204</span></div></td>
+              <td><div class="schedule-item"><strong>Русский язык</strong><br><span>каб. 208</span></div></td>
+              <td><div class="schedule-item"><strong>Математика</strong><br><span>каб. 204</span></div></td>
+              <td><div class="schedule-item"><strong>Математика</strong><br><span>каб. 204</span></div></td>
+              <td><div class="schedule-item"><strong>Литература</strong><br><span>каб. 208</span></div></td>
+            </tr>
+            <tr>
+              <td>10:00–10:45</td>
+              <td><div class="schedule-item"><strong>Русский язык</strong><br><span>каб. 208</span></div></td>
+              <td><div class="schedule-item"><strong>Литература</strong><br><span>каб. 208</span></div></td>
+              <td><div class="schedule-item"><strong>Физика</strong><br><span>каб. 301</span></div></td>
+              <td><div class="schedule-item"><strong>Русский язык</strong><br><span>каб. 208</span></div></td>
+              <td><div class="schedule-item"><strong>Математика</strong><br><span>каб. 204</span></div></td>
+            </tr>
+            <tr>
+              <td>11:00–11:45</td>
+              <td><div class="schedule-item"><strong>Химия</strong><br><span>каб. 212</span></div></td>
+              <td><div class="schedule-item"><strong>История</strong><br><span>каб. 105</span></div></td>
+              <td><div class="schedule-item"><strong>Химия</strong><br><span>каб. 212</span></div></td>
+              <td><div class="schedule-item"><strong>История</strong><br><span>каб. 105</span></div></td>
+              <td><div class="schedule-item"><strong>Английский язык</strong><br><span>каб. 210</span></div></td>
+            </tr>
+            <tr>
+              <td>13:00–13:45</td>
+              <td><div class="schedule-item"><strong>История</strong><br><span>каб. 105</span></div></td>
+              <td><div class="schedule-item"><strong>Биология</strong><br><span>каб. 305</span></div></td>
+              <td><div class="schedule-item"><strong>Биология</strong><br><span>каб. 305</span></div></td>
+              <td><div class="schedule-item"><strong>История</strong><br><span>каб. 105</span></div></td>
+              <td><div class="schedule-item"><strong>Информатика</strong><br><span>каб. 402</span></div></td>
+            </tr>
+            <tr>
+              <td>14:00–14:45</td>
+              <td><div class="schedule-item"><strong>Английский язык</strong><br><span>каб. 210</span></div></td>
+              <td><div class="schedule-item"><strong>Английский язык</strong><br><span>каб. 210</span></div></td>
+              <td><div class="schedule-item"><strong>Английский язык</strong><br><span>каб. 210</span></div></td>
+              <td><div class="schedule-item"><strong>Физкультура</strong><br><span>спортзал</span></div></td>
+              <td><div class="schedule-item"><strong>Информатика</strong><br><span>каб. 402</span></div></td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 30px; color: #7f8c8d; font-size: 14px;">
+          <em>Примечание: Расписание составлено на неделю.</em>
+        </p>
+      </div>
+
+      <!-- ОБНОВЛЕННАЯ СТРАНИЦА: Оценки -->
+      <div id="grades" class="page">
+        <div class="filters">
+          <div class="filter-group">
+            <label>Учебный год</label>
+            <select>
+              <option>2024/2025</option>
+              <option>2023/2024</option>
+              <option>2022/2023</option>
+            </select>
+          </div>
+          <!-- Фильтр: Неделя -->
+          <div class="filter-group">
+            <label>Неделя</label>
+            <select id="week-filter">
+              <option value="all">Все</option>
+              <option value="1-7">1-7 апреля</option>
+              <option value="8-14">8-14 апреля</option>
+              <option value="15-21">15-21 апреля</option>
+              <option value="22-28">22-28 апреля</option>
+              <option value="29-30">29-30 апреля</option>
+            </select>
+          </div>
+        </div>
+        <div class="tabs">
+          <button class="tab active">Все отметки</button>
+          <button class="tab">Итоговые отметки</button>
+        </div>
+
+        <!-- Таблица: Все отметки -->
+        <div id="all-grades" class="grades-section">
+          <table class="all-grades-table">
+            <thead>
+              <tr>
+                <th>Предмет</th>
+                <th>01.04</th>
+                <th>02.04</th>
+                <th>03.04</th>
+                <th>04.04</th>
+                <th>05.04</th>
+                <th>06.04</th>
+                <th>07.04</th>
+                <th>Средний балл</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Математика</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="avg-cell grade-5">4.7</td>
+              </tr>
+              <tr>
+                <td>Русский язык</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="avg-cell grade-4">3.7</td>
+              </tr>
+              <tr>
+                <td>Физика</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="avg-cell grade-4">4.0</td>
+              </tr>
+              <tr>
+                <td>Литература</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="avg-cell grade-4">4.3</td>
+              </tr>
+              <tr>
+                <td>Английский язык</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="avg-cell grade-5">4.7</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Таблица: Итоговые отметки -->
+        <div id="final-grades" class="grades-section" style="display: none;">
+          <table>
+            <thead>
+              <tr>
+                <th>Предмет</th>
+                <th>1 четв</th>
+                <th>2 четв</th>
+                <th>3 четв</th>
+                <th>4 четв</th>
+                <th>Годовая</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Математика</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-5">5</td>
+              </tr>
+              <tr>
+                <td>Русский язык</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-4">4</td>
+              </tr>
+              <tr>
+                <td>Физика</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-3">3</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-4">4</td>
+              </tr>
+              <tr>
+                <td>Литература</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-4">4</td>
+              </tr>
+              <tr>
+                <td>Английский язык</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-5">5</td>
+                <td class="grade-cell grade-4">4</td>
+                <td class="grade-cell">—</td>
+                <td class="grade-cell grade-5">5</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="homework" class="page">
+        <h2>📖 Домашние задания</h2>
+        <p class="date">Класс: 9А</p>
+        <table class="homework-table">
+          <thead>
+            <tr>
+              <th>Предмет</th>
+              <th>Задание</th>
+              <th>Задано</th>
+              <th>Сдать до</th>
+              <th>Статус</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Математика</td>
+              <td>Решить задачи №15-25 из учебника</td>
+              <td>05.04.2025</td>
+              <td>08.04.2025</td>
+              <td><input type="checkbox" class="homework-done" onclick="markAsDone(this)"></td>
+            </tr>
+            <tr>
+              <td>Литература</td>
+              <td>Прочитать рассказ Чехова "Ванька"</td>
+              <td>04.04.2025</td>
+              <td>07.04.2025</td>
+              <td><input type="checkbox" class="homework-done" onclick="markAsDone(this)" checked></td>
+            </tr>
+            <tr>
+              <td>Физика</td>
+              <td>Подготовить доклад по теме "Закон Ома"</td>
+              <td>03.04.2025</td>
+              <td>10.04.2025</td>
+              <td><input type="checkbox" class="homework-done" onclick="markAsDone(this)"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- JavaScript для переключения страниц + анимация фигур -->
+  <script src="script.js"></script>
+  <script>	
+    
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      document.getElementById(pageId).classList.add('active');
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-page') === pageId) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    function markAsDone(checkbox) {
+      const row = checkbox.closest('tr');
+      const assignmentCell = row.cells[1];
+      if (checkbox.checked) {
+        assignmentCell.classList.add('homework-completed');
+      } else {
+        assignmentCell.classList.remove('homework-completed');
+      }
+    }
+
+    // Переключение вкладок внутри "Оценки"
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+
+        const allGradesSection = document.getElementById('all-grades');
+        const finalGradesSection = document.getElementById('final-grades');
+
+        if (this.textContent === 'Все отметки') {
+          allGradesSection.style.display = 'block';
+          finalGradesSection.style.display = 'none';
+        } else if (this.textContent === 'Итоговые отметки') {
+          allGradesSection.style.display = 'none';
+          finalGradesSection.style.display = 'block';
+        }
+      });
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const pageId = this.getAttribute('data-page');
+        showPage(pageId);
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.homework-done').forEach(checkbox => {
+        if (checkbox.checked) {
+          markAsDone(checkbox);
+        }
+      });
+    });
+  
+  </script>
+</body>
+</html>
